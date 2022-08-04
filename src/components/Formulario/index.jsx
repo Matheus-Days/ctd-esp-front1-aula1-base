@@ -5,13 +5,11 @@ import treinador from "../../assets/treinador.png";
 import pikachu from "../../assets/pikachu.png";
 import Input from "../Input";
 import Detalhe from "./detalhe";
-
-// Neste componente temos nosso formulário e dentro dele
-// temos os componentes que precisam consumir nosso estado.
-// Lembre-se qual é o passo que devemos dar para que nosso
-// componentes podem consumir um estado global.
+import { useFormContext } from "../../context/contextoFormulario";
 
 const Formulario = () => {
+  const [state, dispatch] = useFormContext();
+
   return (
     <>
       <header className="form-header">
@@ -29,27 +27,133 @@ const Formulario = () => {
           Por favor, preencha o formulário para que possamos mostrar seu Pokémon
         </p>
         <div className="corpo-formulario">
-          {/*
-           Se ao menos tivéssemos uma maneira de "encapsular" nossos componentes
-           para que possam acessar o estado global.
-          */}
           <div className="inputs">
             <div>
               <p className="nome-secao">
                 <img src={treinador} alt="treinador" />
                 <span>Treinador</span>
               </p>
-              <Input name="nome" label="Nome" />
-              <Input name="sobrenome" label="Sobrenome" />
-              <Input name="email" label="Email" type="email" />
+              <Input
+                name="nome"
+                label="Nome"
+                value={state.coach.name}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_COACH",
+                    payload: {
+                      field: "name",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Input
+                name="sobrenome"
+                label="Sobrenome"
+                value={state.coach.lastName}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_COACH",
+                    payload: {
+                      field: "lastName",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Input
+                name="email"
+                label="Email"
+                type="email"
+                value={state.coach.email}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_COACH",
+                    payload: {
+                      field: "email",
+                      value,
+                    },
+                  });
+                }}
+              />
             </div>
-            <div>
-              <p className="nome-secao">
-                <img src={pikachu} alt="pikachu" />
-                <span>Pokémon</span>
-              </p>
-              <Input name="nomePokemon" label="Nome" />
-            </div>
+              <div>
+                <p className="nome-secao">
+                  <img src={pikachu} alt="pikachu" />
+                  <span>Pokémon</span>
+                </p>
+                <Input
+                  name="nomePokemon"
+                  label="Nome"
+                  value={state.pokemon.name}
+                  onChange={(value) => {
+                    dispatch({
+                      type: "UPDATE_POKEMON",
+                      payload: {
+                        field: "name",
+                        value,
+                      },
+                    });
+                  }}
+                />
+                <Input
+                  name="tipoPokemon"
+                  label="Tipo"
+                  value={state.pokemon.type}
+                  onChange={(value) => {
+                    dispatch({
+                      type: "UPDATE_POKEMON",
+                      payload: {
+                        field: "type",
+                        value,
+                      },
+                    });
+                  }}
+                />
+                <Input
+                  name="element"
+                  label="Elemento"
+                  value={state.pokemon.element}
+                  onChange={(value) => {
+                    dispatch({
+                      type: "UPDATE_POKEMON",
+                      payload: {
+                        field: "element",
+                        value,
+                      },
+                    });
+                  }}
+                />
+                <Input
+                  name="height"
+                  label="Altura"
+                  type="number"
+                  value={state.pokemon.height}
+                  onChange={(value) => {
+                    dispatch({
+                      type: "UPDATE_POKEMON",
+                      payload: {
+                        field: "height",
+                        value,
+                      },
+                    });
+                  }}
+                />
+                <Input
+                  name="age"
+                  label="Idade"
+                  value={state.pokemon.age}
+                  onChange={(value) => {
+                    dispatch({
+                      type: "UPDATE_POKEMON",
+                      payload: {
+                        field: "age",
+                        value,
+                      },
+                    });
+                  }}
+                />
+              </div>
           </div>
           <Detalhe />
         </div>
