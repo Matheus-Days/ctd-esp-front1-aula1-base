@@ -1,3 +1,5 @@
+import propTypes from 'prop-types';
+
 const Input = ({ name, value, onChange = () => {}, label, type = "text" }) => {
   return (
     <div className="input-receptor">
@@ -11,5 +13,13 @@ const Input = ({ name, value, onChange = () => {}, label, type = "text" }) => {
     </div>
   );
 };
+
+Input.propTypes = {
+  name: propTypes.string.isRequired,
+  value: propTypes.oneOfType([propTypes.string, propTypes.number]),
+  onChange: propTypes.func.isRequired,
+  label: propTypes.string.isRequired,
+  type: propTypes.string
+}
 
 export default Input;
