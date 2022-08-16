@@ -111,6 +111,15 @@ h1 {
   margin-left: 1rem;
 }
 
+.input-receptor select {
+  padding: 1rem;
+  width: 300px;
+  border-radius: 10px;
+  border-style: solid;
+  margin-left: 1rem;
+  box-sizing: content-box;
+}
+
 .formulario-entrada .corpo-formulario {
   display: flex;
   flex-direction: row;

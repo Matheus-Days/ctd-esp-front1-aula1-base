@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import pokebola from "../../assets/pokebola.png";
 import treinador from "../../assets/treinador.png";
@@ -6,9 +5,15 @@ import pikachu from "../../assets/pikachu.png";
 import Input from "../Input";
 import Detalhe from "./detalhe";
 import { useFormContext } from "../../context/contextoFormulario";
+import { Select } from "../Select";
+import { useQuery } from "@tanstack/react-query";
 
 const Formulario = () => {
   const [state, dispatch] = useFormContext();
+
+  const { isLoading, error, data } = useQuery(["getPokemonTypes"], () =>
+    fetch("https://pokeapi.co/api/v2/type/").then((res) => res.json())
+  );
 
   return (
     <>
@@ -77,83 +82,84 @@ const Formulario = () => {
                 }}
               />
             </div>
-              <div>
-                <p className="nome-secao">
-                  <img src={pikachu} alt="pikachu" />
-                  <span>Pokémon</span>
-                </p>
-                <Input
-                  name="nomePokemon"
-                  label="Nome"
-                  value={state.pokemon.name}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "UPDATE_POKEMON",
-                      payload: {
-                        field: "name",
-                        value,
-                      },
-                    });
-                  }}
-                />
-                <Input
-                  name="tipoPokemon"
-                  label="Tipo"
-                  value={state.pokemon.type}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "UPDATE_POKEMON",
-                      payload: {
-                        field: "type",
-                        value,
-                      },
-                    });
-                  }}
-                />
-                <Input
-                  name="element"
-                  label="Elemento"
-                  value={state.pokemon.element}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "UPDATE_POKEMON",
-                      payload: {
-                        field: "element",
-                        value,
-                      },
-                    });
-                  }}
-                />
-                <Input
-                  name="height"
-                  label="Altura"
-                  type="number"
-                  value={state.pokemon.height}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "UPDATE_POKEMON",
-                      payload: {
-                        field: "height",
-                        value,
-                      },
-                    });
-                  }}
-                />
-                <Input
-                  name="age"
-                  label="Idade"
-                  value={state.pokemon.age}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "UPDATE_POKEMON",
-                      payload: {
-                        field: "age",
-                        value,
-                      },
-                    });
-                  }}
-                />
-              </div>
+            <div>
+              <p className="nome-secao">
+                <img src={pikachu} alt="pikachu" />
+                <span>Pokémon</span>
+              </p>
+              <Input
+                name="nomePokemon"
+                label="Nome"
+                value={state.pokemon.name}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_POKEMON",
+                    payload: {
+                      field: "name",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Select
+                name="tipoPokemon"
+                label="Tipo"
+                disabled={isLoading || error}
+                options={data?.results}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_POKEMON",
+                    payload: {
+                      field: "type",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Input
+                name="element"
+                label="Elemento"
+                value={state.pokemon.element}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_POKEMON",
+                    payload: {
+                      field: "element",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Input
+                name="height"
+                label="Altura"
+                type="number"
+                value={state.pokemon.height}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_POKEMON",
+                    payload: {
+                      field: "height",
+                      value,
+                    },
+                  });
+                }}
+              />
+              <Input
+                name="age"
+                label="Idade"
+                value={state.pokemon.age}
+                onChange={(value) => {
+                  dispatch({
+                    type: "UPDATE_POKEMON",
+                    payload: {
+                      field: "age",
+                      value,
+                    },
+                  });
+                }}
+              />
+            </div>
           </div>
           <Detalhe />
         </div>
